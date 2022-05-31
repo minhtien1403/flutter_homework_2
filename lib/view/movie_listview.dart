@@ -15,20 +15,20 @@ class MovieListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("POPULAR")),
+        appBar: AppBar(title: const Text("POPULAR")),
         body: ListView.builder(
-      itemCount: _movies.length,
-      itemBuilder: (context, index) {
-        return MovieItem(
-          movie: _movies[index],
-        );
-      },
-    ));
+          itemCount: _movies.length,
+          itemBuilder: (context, index) {
+            return MovieListViewItem(
+              movie: _movies[index],
+            );
+          },
+        ));
   }
 }
 
-class MovieItem extends StatelessWidget {
-  const MovieItem({Key? key, required this.movie}) : super(key: key);
+class MovieListViewItem extends StatelessWidget {
+  const MovieListViewItem({Key? key, required this.movie}) : super(key: key);
   final Movie movie;
 
   @override
@@ -39,6 +39,26 @@ class MovieItem extends StatelessWidget {
       child: Row(
         children: [
           Image(image: AssetImage(movie.thumbUrl)),
+          const SizedBox(width: 10,),
+          Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                movie.movieName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 10,),
+              Text(
+                movie.movieDescription,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ))
         ],
       ),
     );
