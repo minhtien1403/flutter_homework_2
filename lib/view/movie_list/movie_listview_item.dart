@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_homework_2/model/movie.dart';
 import 'package:flutter_homework_2/services/api_services.dart';
-import 'package:flutter_homework_2/view/movie_details_view.dart';
+
+import '../movie_details/movie_details_view.dart';
 
 class MovieListViewItem extends StatelessWidget {
   MovieListViewItem({Key? key, required this.movie}) : super(key: key);
@@ -15,8 +16,9 @@ class MovieListViewItem extends StatelessWidget {
       child: CustomListtile(movie: movie),
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MovieDetailsView(movie: movie)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => MovieDetailsView(movie: movie)));
       },
     );
   }
@@ -33,23 +35,27 @@ class CustomListtile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, top: 20, bottom: 10),
       child: Row(
         children: [
-          CachedNetworkImage(imageUrl: "${APIServices.baseImageUrl}${movie.posterPath}",
-          imageBuilder: (context, imageProvider) => Container(
-            height: 180,
-            width: 120,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: imageProvider, fit: BoxFit.fitHeight)
+          CachedNetworkImage(
+            imageUrl: "${APIServices.baseImageUrl}${movie.posterPath}",
+            imageBuilder: (context, imageProvider) => Container(
+              height: 180,
+              width: 120,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: imageProvider, fit: BoxFit.fitHeight)),
+            ),
+            placeholder: (context, url) => Container(
+              width: 120,
+              height: 180,
+              child: Image.asset("assets/images/movie_placeholder.png"),
             ),
           ),
-          placeholder: (context, url) => Container(
-            width: 120,
-            height: 180,
-            child: Image.asset("assets/images/movie_placeholder.png"),
-          ),),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 movie.title,
@@ -58,7 +64,9 @@ class CustomListtile extends StatelessWidget {
                 textAlign: TextAlign.left,
                 style: TextStyle(fontSize: 20),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Text(
                 movie.overview,
                 maxLines: 5,
